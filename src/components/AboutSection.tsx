@@ -88,20 +88,20 @@ const AboutSection = () => {
           >
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
-                <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-primary to-sky overflow-hidden shadow-elevated">
+                <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-primary to-accent overflow-hidden shadow-elevated">
                   <div className="w-full h-full flex items-center justify-center text-white text-6xl font-bold">
                     ۲۵
                   </div>
                 </div>
-                <div className="aspect-square rounded-2xl bg-secondary flex items-center justify-center shadow-card">
-                  <div className="text-center text-secondary-foreground">
-                    <div className="text-4xl font-bold">۹۸٪</div>
-                    <div className="text-sm">رضایت والدین</div>
+                <div className="aspect-square rounded-2xl bg-accent/10 flex items-center justify-center shadow-card border border-accent/20">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-accent">۹۸٪</div>
+                    <div className="text-sm text-muted-foreground">رضایت والدین</div>
                   </div>
                 </div>
               </div>
               <div className="space-y-4 pt-8">
-                <div className="aspect-square rounded-2xl bg-muted flex items-center justify-center shadow-card">
+                <div className="aspect-square rounded-2xl bg-primary/5 flex items-center justify-center shadow-card border border-primary/20">
                   <div className="text-center">
                     <div className="text-4xl font-bold text-primary">۵۰+</div>
                     <div className="text-sm text-muted-foreground">معلم مجرب</div>
@@ -120,7 +120,7 @@ const AboutSection = () => {
 
             {/* Decorative */}
             <div className="absolute -z-10 -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
-            <div className="absolute -z-10 -bottom-10 -left-10 w-60 h-60 bg-secondary/10 rounded-full blur-2xl" />
+            <div className="absolute -z-10 -bottom-10 -left-10 w-60 h-60 bg-accent/10 rounded-full blur-2xl" />
           </motion.div>
         </div>
       </div>

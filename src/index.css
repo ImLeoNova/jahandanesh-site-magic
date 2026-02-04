@@ -13,44 +13,43 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 217 91% 60%;
+    --primary: 217 91% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 93% 47%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 217 91% 95%;
+    --secondary-foreground: 217 91% 30%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
 
-    --accent: 217 91% 95%;
-    --accent-foreground: 217 91% 40%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --ring: 217 91% 50%;
 
     --radius: 0.75rem;
 
-    /* Custom school colors */
-    --gold: 45 93% 47%;
-    --gold-light: 45 93% 90%;
-    --navy: 217 91% 25%;
+    /* Custom school colors - Blue and White theme */
+    --navy: 217 91% 20%;
     --navy-light: 217 91% 95%;
     --sky: 199 89% 48%;
+    --sky-light: 199 89% 95%;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 25%) 0%, hsl(217 91% 45%) 50%, hsl(199 89% 48%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(45 93% 47%) 0%, hsl(38 92% 50%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 20%) 0%, hsl(217 91% 40%) 50%, hsl(199 89% 48%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 50%) 0%, hsl(199 89% 48%) 100%);
     --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px -2px hsl(217 91% 25% / 0.1);
-    --shadow-card: 0 8px 30px -4px hsl(217 91% 25% / 0.15);
-    --shadow-elevated: 0 20px 50px -10px hsl(217 91% 25% / 0.2);
-    --shadow-glow: 0 0 40px -10px hsl(217 91% 60% / 0.3);
+    --shadow-soft: 0 4px 20px -2px hsl(217 91% 25% / 0.08);
+    --shadow-card: 0 8px 30px -4px hsl(217 91% 25% / 0.12);
+    --shadow-elevated: 0 20px 50px -10px hsl(217 91% 25% / 0.15);
+    --shadow-glow: 0 0 40px -10px hsl(217 91% 60% / 0.25);
   }
 
   .dark {
@@ -66,14 +65,14 @@
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 93% 47%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
 
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
@@ -100,16 +99,16 @@
 
 @layer components {
   .glass {
-    @apply bg-white/80 backdrop-blur-xl border border-white/20;
+    @apply bg-white/90 backdrop-blur-xl border border-white/30 shadow-soft;
   }
 
   .glass-dark {
-    @apply bg-navy/80 backdrop-blur-xl border border-white/10;
+    @apply bg-navy/90 backdrop-blur-xl border border-white/10;
   }
 
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-hero);
+    background-image: var(--gradient-primary);
   }
 
   .card-hover {
@@ -123,7 +122,7 @@
   }
 
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-xl font-semibold
+    @apply bg-accent text-accent-foreground px-6 py-3 rounded-xl font-semibold
            shadow-soft transition-all duration-300
            hover:shadow-lg hover:scale-105 active:scale-95;
   }
@@ -131,6 +130,12 @@
   .btn-outline {
     @apply border-2 border-primary text-primary px-6 py-3 rounded-xl font-semibold
            transition-all duration-300 hover:bg-primary hover:text-primary-foreground;
+  }
+
+  .btn-white {
+    @apply bg-white text-navy px-6 py-3 rounded-xl font-semibold
+           shadow-soft transition-all duration-300
+           hover:shadow-lg hover:scale-105 active:scale-95;
   }
 
   .section-title {
@@ -167,16 +172,12 @@
     color: hsl(var(--navy));
   }
 
-  .bg-gold {
-    background-color: hsl(var(--gold));
-  }
-
-  .text-gold {
-    color: hsl(var(--gold));
-  }
-
   .bg-sky {
     background-color: hsl(var(--sky));
+  }
+
+  .text-sky {
+    color: hsl(var(--sky));
   }
 
   .animate-float {
@@ -190,6 +191,10 @@
 
   .animate-shimmer {
     animation: shimmer 2s linear infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   @keyframes float {
@@ -207,6 +212,15 @@
     }
     100% {
       background-position: 200% 0;
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
     }
   }
 }
