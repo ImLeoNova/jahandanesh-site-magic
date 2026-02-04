@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, GraduationCap, Phone, Mail } from "lucide-react";
+import { Menu, X, GraduationCap, Phone, Mail, LogIn } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const navItems = [
   { name: "صفحه اصلی", href: "#home" },
   { name: "درباره ما", href: "#about" },
   { name: "رویدادها", href: "#events" },
-  { name: "بلاگ", href: "#blog" },
+  { name: "معلمین", href: "#teachers" },
   { name: "گالری", href: "#gallery" },
   { name: "تماس با ما", href: "#contact" },
 ];
@@ -29,18 +30,19 @@ const Header = () => {
       <div className="bg-navy text-white py-2 text-sm hidden md:block">
         <div className="container flex justify-between items-center">
           <div className="flex items-center gap-6">
-            <a href="tel:02112345678" className="flex items-center gap-2 hover:text-secondary transition-colors">
+            <a href="tel:02112345678" className="flex items-center gap-2 hover:text-accent transition-colors">
               <Phone size={14} />
               <span>۰۲۱-۱۲۳۴۵۶۷۸</span>
             </a>
-            <a href="mailto:info@jahandanesh.ir" className="flex items-center gap-2 hover:text-secondary transition-colors">
+            <a href="mailto:info@jahandanesh.ir" className="flex items-center gap-2 hover:text-accent transition-colors">
               <Mail size={14} />
               <span>info@jahandanesh.ir</span>
             </a>
           </div>
-          <div className="text-white/80">
-            ساعت کاری: شنبه تا چهارشنبه ۷:۳۰ - ۱۴:۳۰
-          </div>
+          <Link to="/portal" className="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-full transition-colors">
+            <LogIn size={14} />
+            <span>ورود به پورتال</span>
+          </Link>
         </div>
       </div>
 
@@ -62,7 +64,7 @@ const Header = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-sky flex items-center justify-center shadow-lg group-hover:shadow-glow transition-shadow">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg group-hover:shadow-glow transition-shadow">
               <GraduationCap className="text-white" size={28} />
             </div>
             <div className="flex flex-col">
@@ -88,16 +90,25 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <motion.a
-            href="#contact"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 }}
-            className="hidden lg:block btn-secondary"
-          >
-            ثبت‌نام
-          </motion.a>
+          {/* CTA Buttons */}
+          <div className="hidden lg:flex items-center gap-3">
+            <Link
+              to="/portal"
+              className="flex items-center gap-2 px-4 py-2 text-primary font-medium rounded-lg hover:bg-primary/5 transition-colors"
+            >
+              <LogIn size={18} />
+              <span>پورتال</span>
+            </Link>
+            <motion.a
+              href="#contact"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5 }}
+              className="btn-primary"
+            >
+              ثبت‌نام
+            </motion.a>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -129,10 +140,18 @@ const Header = () => {
                   {item.name}
                 </a>
               ))}
+              <Link
+                to="/portal"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="px-4 py-3 text-primary font-medium rounded-lg hover:bg-primary/10 transition-all flex items-center gap-2"
+              >
+                <LogIn size={18} />
+                ورود به پورتال
+              </Link>
               <a
                 href="#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="btn-secondary text-center mt-2"
+                className="btn-primary text-center mt-2"
               >
                 ثبت‌نام
               </a>

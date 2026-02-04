@@ -2,10 +2,11 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Calendar, Clock, MapPin, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const events = [
   {
-    id: 1,
+    id: "1",
     title: "جشنواره علمی دانش‌آموزان",
     date: "۱۵ اسفند ۱۴۰۴",
     time: "۹:۰۰ - ۱۴:۰۰",
@@ -15,7 +16,7 @@ const events = [
     featured: true,
   },
   {
-    id: 2,
+    id: "2",
     title: "مسابقات ورزشی بین‌کلاسی",
     date: "۲۲ اسفند ۱۴۰۴",
     time: "۸:۰۰ - ۱۲:۰۰",
@@ -25,7 +26,7 @@ const events = [
     featured: false,
   },
   {
-    id: 3,
+    id: "3",
     title: "جلسه اولیا و مربیان",
     date: "۲۸ اسفند ۱۴۰۴",
     time: "۱۶:۰۰ - ۱۸:۰۰",
@@ -35,7 +36,7 @@ const events = [
     featured: false,
   },
   {
-    id: 4,
+    id: "4",
     title: "اردوی علمی-تفریحی",
     date: "۵ فروردین ۱۴۰۵",
     time: "۷:۰۰ - ۱۸:۰۰",
@@ -49,7 +50,7 @@ const events = [
 const categoryColors: Record<string, string> = {
   علمی: "bg-primary/10 text-primary",
   ورزشی: "bg-green-100 text-green-700",
-  آموزشی: "bg-secondary/20 text-secondary-foreground",
+  آموزشی: "bg-accent/10 text-accent",
   تفریحی: "bg-purple-100 text-purple-700",
 };
 
@@ -90,7 +91,7 @@ const EventsSection = () => {
             >
               {event.featured && (
                 <div className="absolute top-4 left-4 z-10">
-                  <span className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-semibold rounded-full">
+                  <span className="px-3 py-1 bg-accent text-white text-xs font-semibold rounded-full">
                     ویژه
                   </span>
                 </div>
@@ -129,14 +130,17 @@ const EventsSection = () => {
                 </div>
 
                 {/* CTA */}
-                <button className="flex items-center gap-2 text-primary font-medium group/btn">
+                <Link 
+                  to={`/event/${event.id}`}
+                  className="flex items-center gap-2 text-primary font-medium group/btn"
+                >
                   <span>اطلاعات بیشتر</span>
                   <ArrowLeft size={16} className="group-hover/btn:-translate-x-1 transition-transform" />
-                </button>
+                </Link>
               </div>
 
               {/* Hover Effect */}
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform origin-right" />
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-right" />
             </motion.div>
           ))}
         </div>
