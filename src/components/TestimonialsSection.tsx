@@ -89,7 +89,7 @@ const TestimonialsSection = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4 }}
-                className="pt-0 sm:pt-8"
+                className="pt-0 sm:pt-12"
               >
                 {/* Rating */}
                 <div className="flex gap-1 mb-4 sm:mb-6">
