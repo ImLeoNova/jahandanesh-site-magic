@@ -52,7 +52,7 @@ const Header = () => {
         animate={{ y: 0 }}
         className={`sticky top-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "glass shadow-elevated py-3"
+            ? "bg-card shadow-elevated py-3"
             : "bg-transparent py-4"
         }`}
       >
@@ -127,7 +127,7 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden fixed top-[120px] right-0 left-0 z-40 glass shadow-elevated"
+            className="lg:hidden fixed top-[120px] right-0 left-0 z-40 bg-card shadow-elevated"
           >
             <nav className="container py-4 flex flex-col gap-2">
               {navItems.map((item) => (

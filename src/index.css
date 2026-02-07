@@ -99,11 +99,11 @@
 
 @layer components {
   .glass {
-    @apply bg-white/90 backdrop-blur-xl border border-white/30 shadow-soft;
+    @apply bg-card border border-border shadow-soft;
   }
 
   .glass-dark {
-    @apply bg-navy/90 backdrop-blur-xl border border-white/10;
+    @apply bg-navy border border-white/10;
   }
 
   .gradient-text {

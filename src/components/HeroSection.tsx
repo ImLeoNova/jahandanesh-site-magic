@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Play, Users, Award, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImage1 from "@/assets/hero-school.jpg";
 import heroImage2 from "@/assets/gallery-1.jpg";
 import heroImage3 from "@/assets/gallery-2.jpg";
@@ -137,12 +138,12 @@ const HeroSection = () => {
                 ثبت‌نام آنلاین
                 <ArrowLeft className="group-hover:-translate-x-1 transition-transform" size={18} />
               </a>
-              <button className="flex items-center gap-3 px-6 py-3 rounded-xl border-2 border-white/30 hover:bg-white/10 transition-all group">
+              <Link to="/virtual-tour" className="flex items-center gap-3 px-6 py-3 rounded-xl border-2 border-white/30 hover:bg-white/10 transition-all group">
                 <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
                   <Play size={16} fill="currentColor" />
                 </div>
                 <span>تور مجازی</span>
-              </button>
+              </Link>
             </motion.div>
 
             {/* Stats */}
@@ -171,7 +172,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="hidden lg:block"
           >
-            <div className="glass-dark rounded-3xl p-8 shadow-elevated">
+            <div className="bg-navy rounded-3xl p-8 shadow-elevated">
               <h3 className="text-white text-xl font-bold mb-4">چرا جهان دانش؟</h3>
               <ul className="space-y-4">
                 {[

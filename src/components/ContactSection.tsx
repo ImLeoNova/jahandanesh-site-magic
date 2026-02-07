@@ -1,14 +1,25 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
+// Fix default marker icon
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+});
 
 const contactInfo = [
   {
     icon: Phone,
     title: "تلفن",
-    value: "۰۲۱-۱۲۳۴۵۶۷۸",
-    href: "tel:02112345678",
+    value: "۰۳۴-۴۲۲۳۴۵۶۷",
+    href: "tel:03442234567",
   },
   {
     icon: Mail,
@@ -19,7 +30,7 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "آدرس",
-    value: "تهران، خیابان ولیعصر، پلاک ۱۲۳",
+    value: "سیرجان، استان کرمان",
     href: "#",
   },
   {
@@ -29,6 +40,10 @@ const contactInfo = [
     href: "#",
   },
 ];
+
+// Sirjan coordinates (FM6R+FF2)
+const SIRJAN_LAT = 29.4519;
+const SIRJAN_LNG = 55.6803;
 
 const ContactSection = () => {
   const ref = useRef(null);
@@ -59,11 +74,11 @@ const ContactSection = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-card rounded-2xl p-8 shadow-card"
+            className="bg-card rounded-2xl p-6 md:p-8 shadow-card"
           >
             <h3 className="text-xl font-bold mb-6">فرم تماس</h3>
             <form className="space-y-5">
-              <div className="grid md:grid-cols-2 gap-5">
+              <div className="grid sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium mb-2">نام و نام خانوادگی</label>
                   <input
@@ -113,43 +128,59 @@ const ContactSection = () => {
             </form>
           </motion.div>
 
-          {/* Contact Info */}
+          {/* Contact Info & Map */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="space-y-6"
+            className="space-y-5"
           >
-            {contactInfo.map((info, index) => (
-              <motion.a
-                key={info.title}
-                href={info.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                className="flex items-start gap-4 p-5 bg-card rounded-xl shadow-soft hover:shadow-card transition-all group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
-                  <info.icon size={24} className="text-primary group-hover:text-white" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-1">{info.title}</h4>
-                  <p className="text-muted-foreground">{info.value}</p>
-                </div>
-              </motion.a>
-            ))}
+            <div className="grid sm:grid-cols-2 gap-4">
+              {contactInfo.map((info, index) => (
+                <motion.a
+                  key={info.title}
+                  href={info.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                  className="flex items-start gap-3 p-4 bg-card rounded-xl shadow-soft hover:shadow-card transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors">
+                    <info.icon size={20} className="text-primary group-hover:text-primary-foreground" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground text-sm mb-0.5">{info.title}</h4>
+                    <p className="text-muted-foreground text-sm">{info.value}</p>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
 
-            {/* Map Placeholder */}
+            {/* Leaflet Map */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: 0.8 }}
-              className="aspect-video rounded-2xl overflow-hidden shadow-card bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center"
+              className="aspect-video rounded-2xl overflow-hidden shadow-card"
             >
-              <div className="text-center">
-                <MapPin size={48} className="text-primary mx-auto mb-2" />
-                <p className="text-muted-foreground">نقشه موقعیت مدرسه</p>
-              </div>
+              <MapContainer
+                center={[SIRJAN_LAT, SIRJAN_LNG]}
+                zoom={15}
+                scrollWheelZoom={false}
+                className="w-full h-full z-0"
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={[SIRJAN_LAT, SIRJAN_LNG]}>
+                  <Popup>
+                    <strong>مدرسه جهان دانش</strong>
+                    <br />
+                    سیرجان، استان کرمان
+                  </Popup>
+                </Marker>
+              </MapContainer>
             </motion.div>
           </motion.div>
         </div>
