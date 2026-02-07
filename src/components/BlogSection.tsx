@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Clock, User, ArrowLeft } from "lucide-react";
+import blogImg1 from "@/assets/blog-1.jpg";
+import blogImg2 from "@/assets/blog-2.jpg";
+import blogImg3 from "@/assets/blog-3.jpg";
 
 const blogPosts = [
   {
@@ -12,7 +15,7 @@ const blogPosts = [
     date: "۱۰ بهمن ۱۴۰۴",
     readTime: "۵ دقیقه",
     category: "آموزشی",
-    image: "📚",
+    image: blogImg1,
   },
   {
     id: 2,
@@ -22,7 +25,7 @@ const blogPosts = [
     date: "۵ بهمن ۱۴۰۴",
     readTime: "۴ دقیقه",
     category: "سلامت",
-    image: "⚽",
+    image: blogImg2,
   },
   {
     id: 3,
@@ -32,7 +35,7 @@ const blogPosts = [
     date: "۱ بهمن ۱۴۰۴",
     readTime: "۶ دقیقه",
     category: "مشاوره",
-    image: "✏️",
+    image: blogImg3,
   },
 ];
 
@@ -70,8 +73,12 @@ const BlogSection = () => {
               className="group bg-card rounded-2xl overflow-hidden shadow-soft card-hover"
             >
               {/* Image */}
-              <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center text-6xl">
-                {post.image}
+              <div className="aspect-video overflow-hidden">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
 
               {/* Content */}
