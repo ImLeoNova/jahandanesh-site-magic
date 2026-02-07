@@ -76,9 +76,9 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-4xl mx-auto relative"
         >
-          <div className="bg-card rounded-3xl shadow-elevated p-8 md:p-12 relative">
+          <div className="bg-card rounded-3xl shadow-elevated p-5 sm:p-8 md:p-12 relative">
             {/* Quote Icon */}
-            <div className="absolute top-8 right-8 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+            <div className="hidden sm:flex absolute top-8 right-8 w-16 h-16 rounded-2xl bg-primary/10 items-center justify-center">
               <Quote className="text-primary" size={32} />
             </div>
 
@@ -89,30 +89,30 @@ const TestimonialsSection = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4 }}
-                className="pt-8"
+                className="pt-0 sm:pt-8"
               >
                 {/* Rating */}
-                <div className="flex gap-1 mb-6">
+                <div className="flex gap-1 mb-4 sm:mb-6">
                   {[...Array(testimonials[current].rating)].map((_, i) => (
-                    <Star key={i} className="text-accent fill-accent" size={20} />
+                    <Star key={i} className="text-accent fill-accent" size={16} />
                   ))}
                 </div>
 
                 {/* Content */}
-                <p className="text-xl md:text-2xl text-foreground leading-relaxed mb-8">
-                  "{testimonials[current].content}"
+                <p className="text-base sm:text-xl md:text-2xl text-foreground leading-relaxed mb-6 sm:mb-8">
+                  {testimonials[current].content}
                 </p>
 
                 {/* Author */}
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-xl font-bold">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-base sm:text-xl font-bold shrink-0">
                     {testimonials[current].name.charAt(0)}
                   </div>
                   <div>
-                    <h4 className="font-bold text-foreground">
+                    <h4 className="font-bold text-foreground text-sm sm:text-base">
                       {testimonials[current].name}
                     </h4>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-xs sm:text-sm">
                       {testimonials[current].role}
                     </p>
                   </div>
