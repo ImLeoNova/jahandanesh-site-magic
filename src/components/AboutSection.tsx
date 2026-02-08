@@ -1,46 +1,22 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
 import { Target, Lightbulb, Heart, Shield } from "lucide-react";
+import { useInView } from "@/hooks/use-in-view";
 
 const values = [
-  {
-    icon: Target,
-    title: "هدفمندی",
-    description: "تمرکز بر اهداف آموزشی و تربیتی مشخص",
-  },
-  {
-    icon: Lightbulb,
-    title: "نوآوری",
-    description: "استفاده از روش‌های نوین آموزشی",
-  },
-  {
-    icon: Heart,
-    title: "مهربانی",
-    description: "ایجاد فضای صمیمی و دوستانه",
-  },
-  {
-    icon: Shield,
-    title: "امنیت",
-    description: "محیطی امن برای رشد دانش‌آموزان",
-  },
+  { icon: Target, title: "هدفمندی", description: "تمرکز بر اهداف آموزشی و تربیتی مشخص" },
+  { icon: Lightbulb, title: "نوآوری", description: "استفاده از روش‌های نوین آموزشی" },
+  { icon: Heart, title: "مهربانی", description: "ایجاد فضای صمیمی و دوستانه" },
+  { icon: Shield, title: "امنیت", description: "محیطی امن برای رشد دانش‌آموزان" },
 ];
 
 const AboutSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { ref, isInView } = useInView();
 
   return (
     <section id="about" className="py-24 bg-muted/50 overflow-hidden">
-      <div className="container">
+      <div className="container" ref={ref}>
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-          >
+          <div className={`transition-all duration-700 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"}`}>
             <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
               درباره ما
             </span>
@@ -60,12 +36,10 @@ const AboutSection = () => {
 
             <div className="grid grid-cols-2 gap-4">
               {values.map((value, index) => (
-                <motion.div
+                <div
                   key={value.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  className="flex items-start gap-3 p-4 bg-card rounded-xl shadow-soft hover:shadow-card transition-shadow"
+                  className={`flex items-start gap-3 p-4 bg-card rounded-xl shadow-soft hover:shadow-card transition-all duration-500 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+                  style={{ transitionDelay: `${200 + index * 100}ms` }}
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                     <value.icon className="text-primary" size={20} />
@@ -74,24 +48,17 @@ const AboutSection = () => {
                     <h4 className="font-semibold text-foreground">{value.title}</h4>
                     <p className="text-sm text-muted-foreground">{value.description}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Image Grid */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
-          >
+          <div className={`relative transition-all duration-700 delay-200 ${isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
                 <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-primary to-accent overflow-hidden shadow-elevated">
-                  <div className="w-full h-full flex items-center justify-center text-white text-6xl font-bold">
-                    ۲۵
-                  </div>
+                  <div className="w-full h-full flex items-center justify-center text-white text-6xl font-bold">۲۵</div>
                 </div>
                 <div className="aspect-square rounded-2xl bg-accent/10 flex items-center justify-center shadow-card border border-accent/20">
                   <div className="text-center">
@@ -117,11 +84,9 @@ const AboutSection = () => {
                 </div>
               </div>
             </div>
-
-            {/* Decorative */}
             <div className="absolute -z-10 -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
             <div className="absolute -z-10 -bottom-10 -left-10 w-60 h-60 bg-accent/10 rounded-full blur-2xl" />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
