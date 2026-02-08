@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Play, Users, Award, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage1 from "@/assets/hero-school.jpg";
@@ -42,37 +41,39 @@ const stats = [
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [slideKey, setSlideKey] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setSlideKey((k) => k + 1);
     }, 10000);
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setSlideKey((k) => k + 1);
+  };
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setSlideKey((k) => k + 1);
+  };
 
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Images */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0 z-0"
-        >
-          <img
-            src={slides[currentSlide].image}
-            alt={slides[currentSlide].title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-l from-navy/95 via-navy/85 to-navy/70" />
-        </motion.div>
-      </AnimatePresence>
+      {/* Background Image */}
+      <div
+        key={slideKey}
+        className="absolute inset-0 z-0 animate-hero-fade"
+      >
+        <img
+          src={slides[currentSlide].image}
+          alt={slides[currentSlide].title}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-l from-navy/95 via-navy/85 to-navy/70" />
+      </div>
 
       {/* Decorative Elements */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float" />
@@ -96,44 +97,26 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="text-white">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6"
-            >
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6 animate-fade-up">
               <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
               <span className="text-sm">ثبت‌نام سال تحصیلی جدید آغاز شد</span>
-            </motion.div>
+            </div>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlide}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.6 }}
-              >
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
-                  {slides[currentSlide].title}
-                  <br />
-                  <span className="text-3xl md:text-4xl lg:text-5xl font-medium text-white/90">
-                    {slides[currentSlide].subtitle}
-                  </span>
-                </h1>
+            <div key={slideKey} className="animate-fade-up">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
+                {slides[currentSlide].title}
+                <br />
+                <span className="text-3xl md:text-4xl lg:text-5xl font-medium text-white/90">
+                  {slides[currentSlide].subtitle}
+                </span>
+              </h1>
 
-                <p className="text-lg text-white/80 mb-8 max-w-lg leading-relaxed">
-                  {slides[currentSlide].description}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+              <p className="text-lg text-white/80 mb-8 max-w-lg leading-relaxed">
+                {slides[currentSlide].description}
+              </p>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-4 mb-12"
-            >
+            <div className="flex flex-wrap gap-4 mb-12 animate-fade-up" style={{ animationDelay: "300ms" }}>
               <a href="#contact" className="btn-secondary flex items-center gap-2 group">
                 ثبت‌نام آنلاین
                 <ArrowLeft className="group-hover:-translate-x-1 transition-transform" size={18} />
@@ -144,15 +127,10 @@ const HeroSection = () => {
                 </div>
                 <span>تور مجازی</span>
               </Link>
-            </motion.div>
+            </div>
 
             {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex gap-8"
-            >
+            <div className="flex gap-8 animate-fade-up" style={{ animationDelay: "400ms" }}>
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mx-auto mb-2">
@@ -162,16 +140,11 @@ const HeroSection = () => {
                   <div className="text-sm text-white/60">{stat.label}</div>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* Floating Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="hidden lg:block"
-          >
+          <div className="hidden lg:block animate-slide-left" style={{ animationDelay: "500ms" }}>
             <div className="bg-navy rounded-3xl p-8 shadow-elevated">
               <h3 className="text-white text-xl font-bold mb-4">چرا جهان دانش؟</h3>
               <ul className="space-y-4">
@@ -182,22 +155,20 @@ const HeroSection = () => {
                   "فعالیت‌های فوق برنامه متنوع",
                   "مشاوره تحصیلی تخصصی",
                 ].map((item, index) => (
-                  <motion.li
+                  <li
                     key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 + index * 0.1 }}
-                    className="flex items-center gap-3 text-white/90"
+                    className="flex items-center gap-3 text-white/90 animate-slide-left"
+                    style={{ animationDelay: `${700 + index * 100}ms` }}
                   >
                     <span className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center">
                       <span className="w-2 h-2 rounded-full bg-accent" />
                     </span>
                     {item}
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -206,7 +177,10 @@ const HeroSection = () => {
         {slides.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrentSlide(index)}
+            onClick={() => {
+              setCurrentSlide(index);
+              setSlideKey((k) => k + 1);
+            }}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               index === currentSlide ? "bg-white w-8" : "bg-white/40 hover:bg-white/60"
             }`}
@@ -215,21 +189,12 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/60"
-      >
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/60 animate-fade-in" style={{ animationDelay: "1000ms" }}>
         <span className="text-sm mb-2">اسکرول کنید</span>
         <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-1.5 h-1.5 bg-white rounded-full"
-          />
+          <div className="w-1.5 h-1.5 bg-white rounded-full animate-scroll-bounce" />
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

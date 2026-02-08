@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, GraduationCap, Phone, Mail, LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -47,10 +46,8 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`sticky top-0 z-50 transition-all duration-500 ${
+      <header
+        className={`sticky top-0 z-50 transition-all duration-500 animate-fade-slide ${
           isScrolled
             ? "bg-card shadow-elevated py-3"
             : "bg-transparent py-4"
@@ -58,11 +55,9 @@ const Header = () => {
       >
         <div className="container flex items-center justify-between">
           {/* Logo */}
-          <motion.a
+          <a
             href="#home"
-            className="flex items-center gap-3 group"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            className="flex items-center gap-3 group hover:scale-[1.02] active:scale-[0.98] transition-transform"
           >
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg group-hover:shadow-glow transition-shadow">
               <GraduationCap className="text-white" size={28} />
@@ -71,22 +66,20 @@ const Header = () => {
               <span className="text-xl font-bold text-foreground">جهان دانش</span>
               <span className="text-xs text-muted-foreground">آینده‌سازان فردا</span>
             </div>
-          </motion.a>
+          </a>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item, index) => (
-              <motion.a
+              <a
                 key={item.name}
                 href={item.href}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="relative px-4 py-2 text-foreground/80 font-medium rounded-lg hover:text-primary hover:bg-primary/5 transition-all group"
+                className="relative px-4 py-2 text-foreground/80 font-medium rounded-lg hover:text-primary hover:bg-primary/5 transition-all group animate-fade-slide"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 {item.name}
                 <span className="absolute bottom-0 right-4 left-4 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-right" />
-              </motion.a>
+              </a>
             ))}
           </nav>
 
@@ -99,15 +92,13 @@ const Header = () => {
               <LogIn size={18} />
               <span>پورتال</span>
             </Link>
-            <motion.a
+            <a
               href="#contact"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 }}
-              className="btn-primary"
+              className="btn-primary animate-scale-in"
+              style={{ animationDelay: "500ms" }}
             >
               ثبت‌نام
-            </motion.a>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -118,47 +109,42 @@ const Header = () => {
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-      </motion.header>
+      </header>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden fixed top-[120px] right-0 left-0 z-40 bg-card shadow-elevated"
-          >
-            <nav className="container py-4 flex flex-col gap-2">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-4 py-3 text-foreground font-medium rounded-lg hover:bg-primary/10 hover:text-primary transition-all"
-                >
-                  {item.name}
-                </a>
-              ))}
-              <Link
-                to="/portal"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-3 text-primary font-medium rounded-lg hover:bg-primary/10 transition-all flex items-center gap-2"
-              >
-                <LogIn size={18} />
-                ورود به پورتال
-              </Link>
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden fixed top-[120px] right-0 left-0 z-40 bg-card shadow-elevated animate-fade-slide"
+        >
+          <nav className="container py-4 flex flex-col gap-2">
+            {navItems.map((item) => (
               <a
-                href="#contact"
+                key={item.name}
+                href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="btn-primary text-center mt-2"
+                className="px-4 py-3 text-foreground font-medium rounded-lg hover:bg-primary/10 hover:text-primary transition-all"
               >
-                ثبت‌نام
+                {item.name}
               </a>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ))}
+            <Link
+              to="/portal"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 text-primary font-medium rounded-lg hover:bg-primary/10 transition-all flex items-center gap-2"
+            >
+              <LogIn size={18} />
+              ورود به پورتال
+            </Link>
+            <a
+              href="#contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="btn-primary text-center mt-2"
+            >
+              ثبت‌نام
+            </a>
+          </nav>
+        </div>
+      )}
     </>
   );
 };
